@@ -189,17 +189,22 @@ def main():
             pass
 
     # 4. 금리 변동 비교 로직 (과거 latest 데이터가 존재할 경우)
-    force_email = os.environ.get('FORCE_EMAIL', 'false').lower() == 'true'
+    # 수정됨: 문자열 공백 제거(strip) 추가
+    force_email_env = os.environ.get('FORCE_EMAIL', 'false').strip().lower()
+    force_email = (force_email_env == 'true')
 
     if data.get("latest") and "deposit_rate" in data["latest"]:
         old_record = data["latest"]
+        
         if (old_record["deposit_rate"] != new_record["deposit_rate"] or 
             old_record["savings_rate"] != new_record["savings_rate"] or
-            force_email): # <--- 강제 발송 조건 추가
+            force_email): # 강제 발송 확인
+            
             print("🔄 금리 변동 감지 (또는 강제 테스트 실행)!")
             send_change_email(old_record, new_record)
         else:
             print("▶️ 금리 변동 없음.")
+
 
     # 5. History 리스트에 데이터 일괄 저장 (동일 날짜 덮어쓰기 로직 포함)
     date_exists_in_history = False
@@ -224,5 +229,6 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
 
