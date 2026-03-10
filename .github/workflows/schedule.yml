@@ -34,9 +34,10 @@ jobs:
         MAIL_ID: ${{ secrets.MAIL_ID }}
         MAIL_PASSWORD: ${{ secrets.MAIL_PASSWORD }}
         RECIPIENT_EMAIL: ${{ secrets.RECIPIENT_EMAIL }}
-        # 수동 실행 시 입력한 값을 파이썬으로 전달
-        FORCE_EMAIL: ${{ github.event.inputs.force_email }} 
+        # 수정됨: 따옴표를 추가하고 inputs 문법을 최신 버전으로 변경
+        FORCE_EMAIL: "${{ github.event.inputs.force_email || 'false' }}" 
       run: python crawler2.py
+
       
     - name: 결과 파일 자동 커밋
       run: |
