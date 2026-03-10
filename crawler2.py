@@ -204,11 +204,14 @@ def main():
             pass
 
     # 4. 금리 변동 비교 로직 (과거 latest 데이터가 존재할 경우)
+    force_email = os.environ.get('FORCE_EMAIL', 'false').lower() == 'true'
+
     if data.get("latest") and "deposit_rate" in data["latest"]:
         old_record = data["latest"]
         if (old_record["deposit_rate"] != new_record["deposit_rate"] or 
-            old_record["savings_rate"] != new_record["savings_rate"]):
-            print("🔄 금리 변동이 감지되었습니다!")
+            old_record["savings_rate"] != new_record["savings_rate"] or
+            force_email): # <--- 강제 발송 조건 추가
+            print("🔄 금리 변동 감지 (또는 강제 테스트 실행)!")
             send_change_email(old_record, new_record)
         else:
             print("▶️ 금리 변동 없음.")
@@ -236,3 +239,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
