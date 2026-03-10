@@ -60,21 +60,6 @@ def send_change_email(old_data, new_data):
     msg.attach(MIMEText(html_content, 'html', 'utf-8'))
 
 
-'''
-    # 4. Gmail 서버를 통한 발송 (선행 사례들의 표준 포트 587 사용)
-    try:
-        with smtplib.SMTP('smtp.gmail.com', 587) as server:
-            server.starttls() # 보안 연결(TLS) 시작
-            server.login(smtp_username, smtp_password)
-            server.send_message(msg)
-            print("✅ 변동 알림 메일 발송 성공!")
-            
-    except Exception as e:
-        print(f"❌ 메일 발송 실패: {e}")
-'''
-
-
-
     # 4. Brevo SMTP 서버를 통한 발송
     try:
         with smtplib.SMTP('smtp-relay.brevo.com', 587) as server: # <--- 이렇게 변경
@@ -239,4 +224,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
