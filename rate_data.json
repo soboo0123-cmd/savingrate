@@ -1,7 +1,7 @@
 {
   "latest": {
-    "date": "2026-03-14",
-    "deposit_rate": "2.40",
+    "date": "2026-03-13",
+    "deposit_rate": "3.40",
     "savings_rate": "2.80",
     "timestamp": "2026-03-14T14:04:44.344177+09:00"
   },
@@ -44,15 +44,9 @@
     },
     {
       "date": "2026-03-13",
-      "deposit_rate": "2.40",
+      "deposit_rate": "3.40",
       "savings_rate": "2.80",
       "timestamp": "2026-03-13T14:16:41.492031+09:00"
-    },
-    {
-      "date": "2026-03-14",
-      "deposit_rate": "2.40",
-      "savings_rate": "2.80",
-      "timestamp": "2026-03-14T14:04:44.344177+09:00"
     }
   ]
 }
