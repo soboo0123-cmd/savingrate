@@ -1,0 +1,47 @@
+name: Daily Rate Crawler
+
+on:
+  schedule:
+    - cron: "45 0 * * *"  # 매일 한국시간 오전 9시 45분 실행
+  workflow_dispatch:     # 수동 실행 버튼
+    inputs:
+      force_email:
+        description: '금리 변동과 상관없이 강제 메일 발송 테스트 (true/false)'
+        required: true
+        default: 'false'
+
+jobs:
+  run-crawler:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: 저장소 가져오기
+      uses: actions/checkout@v4
+      
+    - name: 파이썬 세팅
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.12'
+        
+    - name: 패키지 및 브라우저 설치
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        playwright install chromium
+        
+    - name: 크롤러 실행
+      env:
+        # 기획안에 따른 새 시크릿 매핑
+        GMAIL_USER: ${{ secrets.GMAIL_USER }}
+        GMAIL_APP_PASS: ${{ secrets.GMAIL_APP_PASS }}
+        RECIPIENT_EMAIL: ${{ secrets.RECIPIENT_EMAIL }}
+        # 테스트 기능 유지
+        FORCE_EMAIL: "${{ github.event.inputs.force_email || 'false' }}" 
+      run: python crawler2.py
+
+    - name: 결과 파일 자동 커밋
+      run: |
+        git config --global user.name "GitHub Actions Bot"
+        git config --global user.email "actions@github.com"
+        git add rate_data.json
+        git diff --quiet && git diff --staged --quiet || (git commit -m "데이터 업데이트" && git push)
