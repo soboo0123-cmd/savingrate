@@ -1,5 +1,10 @@
 파일명은 2로 유지
 
-수요일(내일)에 메일 올까?
+GMAIL_USER
 
-PC에서 지메일 SMTP 발급받아서 되는지 확인 필요
+GMAIL_APP_PASS
+
+RECIPIENT_EMAIL
+
+
+kpostnoti
