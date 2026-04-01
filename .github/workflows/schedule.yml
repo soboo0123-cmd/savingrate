@@ -2,7 +2,7 @@ name: Daily Rate Crawler
 
 on:
   schedule:
-    - cron: "15 23 * * *"  # 매일 한국시간 오전 8시 15분 실행 (UTC 23:15)
+    - cron: "0 19 * * *"  # 매일 한국시간 오전 8시 55분쯤 실행 (UTC 23:15)
   workflow_dispatch:      # 수동 실행 버튼
     inputs:
       force_email:
